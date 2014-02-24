@@ -2,7 +2,7 @@ module Stubhub
   class Geo < Document
     def self.find_by_geo_id(geo_id, options = {})
       params = { :geoId => geo_id }
-      find(params, options)
+      find(params, options).first
     end
 
     # rough matching. i.e. "San Francisco" will match "San Diego" due to the "+San+"

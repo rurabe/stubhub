@@ -8,7 +8,7 @@ module Stubhub
 
     def self.find_by_section_id(section_id,options = {})
       params = { :venue_section_id => section_id }
-      find(params,options)
+      find(params,options).first
     end
     
   end

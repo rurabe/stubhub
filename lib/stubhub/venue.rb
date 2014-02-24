@@ -2,7 +2,7 @@ module Stubhub
   class Venue < Document
      def self.find_by_venue_id(venue_id, options = {})
       params = { :venue_id => venue_id }
-      find(params, options)
+      find(params, options).first
     end
 
     def self.search(search_query, options = {})

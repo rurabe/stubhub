@@ -34,7 +34,6 @@ module Stubhub
       def parse(body,klass)
         parsed_result = JSON.parse(body)
         objects = parsed_result["response"]["docs"].map { |doc| klass.new(doc) }
-        objects.length == 1 ? objects.first : objects
       end
 
       def defaults

@@ -27,7 +27,7 @@ module Stubhub
 
     context "#tickets" do
       it "returns the event's tickets" do
-        event_id = Ticket.find({},{:rows => 1}).event_id
+        event_id = Ticket.find({},{:rows => 1}).first.event_id
         event = Event.find_by_event_id(event_id)
         event.tickets({},:rows => 2).length.should be >= 1
       end
