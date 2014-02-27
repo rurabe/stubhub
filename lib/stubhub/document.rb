@@ -24,12 +24,17 @@
       end
 
       def as_json(options=nil)
-        marshal_dump.stringify_keys
+        stringify(marshal_dump)
       end
 
       def to_json(options=nil)
         as_json(options).to_json
       end
+
+        private
+        def stringify(hash)
+          Hash[hash.map{|k,v|[k.to_s, v]}]
+        end
 
     end
   end

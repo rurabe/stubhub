@@ -13,6 +13,9 @@ require_relative 'stubhub/ticket'
 require_relative 'stubhub/venue'
 require_relative 'stubhub/venue_zone_section'
 require_relative 'stubhub/version'
+require_relative 'stubhub/v1/document'
+require_relative 'stubhub/v1/section'
+require_relative 'stubhub/v1/client'
 
 module Stubhub
 end
