@@ -3,6 +3,7 @@ require 'ostruct'
 require 'uri'
 require 'net/http'
 
+require_relative 'stubhub/api_error'
 require_relative 'stubhub/document'
 require_relative 'stubhub/client'
 require_relative 'stubhub/proxy_client'
