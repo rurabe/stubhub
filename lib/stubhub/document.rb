@@ -1,5 +1,5 @@
   module Stubhub
-    class Document < OpenStruct
+    class Document
 
       def self.find(params={},options = {})
         params.merge!( :stubhubDocumentType => demodulize.downcase )
@@ -13,28 +13,6 @@
       def self.client
         Client
       end
-
-      def fields
-        @table.keys.map{|k| k.to_s}
-      end
-
-      def initialize(data = {})
-        raise ArgumentError, "Invalid data passed to Document.new: #{data.inspect}" unless data.is_a?(Hash)
-        super(data)
-      end
-
-      def as_json(options=nil)
-        stringify(marshal_dump)
-      end
-
-      def to_json(options=nil)
-        as_json(options).to_json
-      end
-
-        private
-        def stringify(hash)
-          Hash[hash.map{|k,v|[k.to_s, v]}]
-        end
 
     end
   end

@@ -15,10 +15,5 @@ module Stubhub
       params = { :description => search_query }
       find(params, options)
     end
-
-    def events(options = {})
-      params = { :ancestorGeoIds => geoId }
-      Event.find(params, options)
-    end
   end
 end

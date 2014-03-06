@@ -1,5 +1,4 @@
 require 'json'
-require 'ostruct'
 require 'uri'
 require 'net/http'
 

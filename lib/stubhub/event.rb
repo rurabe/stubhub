@@ -11,10 +11,5 @@ module Stubhub
       find(params, options)
     end
 
-    def tickets(params = {}, options = {})
-      params.merge!( :event_id => event_id )
-      Ticket.find(params, options)
-    end
-
   end
 end

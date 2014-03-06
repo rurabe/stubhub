@@ -8,7 +8,7 @@ module Stubhub
         path = options.delete(:path) || "listingCatalog/select"
         query = prepare_query(params, options)
         result = get("#{BASE_URL}/#{path}/?#{query}")
-        parse(result.body,klass)
+        parse(result.body)
       end
 
       def prepare_query(params, options={})
@@ -31,9 +31,8 @@ module Stubhub
         end.join("&")
       end
 
-      def parse(body,klass)
-        parsed_result = JSON.parse(body)
-        objects = parsed_result["response"]["docs"].map { |doc| klass.new(doc) }
+      def parse(body)
+        JSON.parse(body)["response"]["docs"]
       end
 
       def defaults

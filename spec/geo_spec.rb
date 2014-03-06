@@ -15,7 +15,7 @@ module Stubhub
     context ".find_by_geo_id" do
       it "finds the geo with geoId #{GEO_ID}" do
         geo = Geo.find_by_geo_id(GEO_ID, :rows => 1)
-        geo.id.should eq(GEO_ID.to_s)
+        geo["id"].should eq(GEO_ID.to_s)
       end
     end
 

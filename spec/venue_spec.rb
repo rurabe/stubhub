@@ -14,7 +14,7 @@ module Stubhub
     context ".find_by_venue_id" do
       it "finds find the venue with venue id #{VENUE_ID}" do
         venue = Venue.find_by_venue_id(VENUE_ID)
-        venue.venue_id.should eq(VENUE_ID.to_s)
+        venue["venue_id"].should eq(VENUE_ID.to_s)
       end
     end
 
@@ -22,13 +22,6 @@ module Stubhub
       it "peforms a search for the keyword" do
         venues = Venue.search("Staples Center")
         venues.length.should be >= 1
-      end
-    end
-
-    context "#sections" do
-      it "returns the venue's sections" do
-        venue = Venue.find_by_venue_id(VENUE_ID)
-        venue.sections({},:rows => 2).length.should be >= 1
       end
     end
 
