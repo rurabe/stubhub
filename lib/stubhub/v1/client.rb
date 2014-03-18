@@ -18,17 +18,18 @@ module Stubhub
           end
         end
 
-        def prepare_query(query={})
-          params = default_params.merge(query)
-          params.map do |k,v|
-            "#{k}=#{v}"
-          end.join("&")
-        end
+        private
 
-        def default_params
-          {rows: 99999}
-        end
+          def prepare_query(query={})
+            params = default_params.merge(query)
+            params.map do |k,v|
+              "#{k}=#{v}"
+            end.join("&")
+          end
 
+          def default_params
+            {rows: 99999}
+          end
 
       end
     end
