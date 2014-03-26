@@ -11,11 +11,11 @@ module Stubhub
         end
 
         def listings
-          @data['listing']
+          @data['listing'] || []
         end
 
         def sections
-          @data['section_stats']
+          @data['section_stats'] || []
         end
 
       end
