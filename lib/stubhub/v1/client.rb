@@ -4,18 +4,10 @@ module Stubhub
       BASE_URL = "https://api.stubhub.com"
 
       class << self
-        def make_request(endpoint,query)
+        def make_request(endpoint,query={})
           raise StandardError.new("STUBHUB_APP_KEY must be set in the ENV") unless ENV['STUBHUB_APP_KEY']
-          uri = URI("#{BASE_URL}/#{endpoint}?#{prepare_query(query)}")
-          request = Net::HTTP::Get.new(uri)
-          request['Authorization'] = "Bearer #{ENV['STUBHUB_APP_KEY']}"
-          request['Accept'] = 'application/json'
-          request['Accept-Encoding'] = 'application/json'
-          net = Net::HTTP.new(uri.hostname,uri.port)
-          net.use_ssl = true if uri.scheme == 'https'
-          net.start do |http|  
-            JSON.load(http.request(request).body)
-          end
+          response = get_response("#{BASE_URL}/#{endpoint}?#{prepare_query(query)}")
+          JSON.parse(response.body)
         end
 
         private
@@ -29,6 +21,19 @@ module Stubhub
 
           def default_params
             {rows: 99999}
+          end
+
+          def get_response(url)
+            uri = URI(url)
+            request = Net::HTTP::Get.new(uri)
+            request['Authorization'] = "Bearer #{ENV['STUBHUB_APP_KEY']}"
+            request['Accept'] = 'application/json'
+            request['Accept-Encoding'] = 'application/json'
+            net = Net::HTTP.new(uri.hostname,uri.port)
+            net.use_ssl = true if uri.scheme == 'https'
+            net.start do |http|  
+              http.request(request)
+            end
           end
 
       end

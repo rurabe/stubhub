@@ -17,6 +17,7 @@ require_relative 'stubhub/version'
 require_relative 'stubhub/v1/client'
 require_relative 'stubhub/v1/response'
 require_relative 'stubhub/v1/search/inventory'
+require_relative 'stubhub/v1/catalog/events'
 
 
 module Stubhub
