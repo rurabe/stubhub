@@ -4,11 +4,14 @@ module Stubhub
 
     class << self
       def make_request(klass, params, options={})
-        require 'cgi' unless defined?(CGI) && defined?(CGI::escape)
+        result = make_unparsed_request(klass,params,options)
+        options[:debug] ? result : parse(result.body)
+      end
+
+      def make_unparsed_request(klass,params,options={})
         path = options.delete(:path) || "listingCatalog/select"
         query = prepare_query(params, options)
-        result = get("#{BASE_URL}/#{path}/?#{query}")
-        parse(result.body)
+        get("#{BASE_URL}/#{path}/?#{query}",options)
       end
 
       def prepare_query(params, options={})
@@ -44,11 +47,17 @@ module Stubhub
 
       private
 
-        def get(url)
+        def get(url,options={})
           uri = URI(url)
-          Net::HTTP.new(uri.host,uri.port).start do |http|
+          request = new_request(uri)
+          result = new_request(uri).start do |http|
             http.get(uri)
           end
+          options[:debug] ? [request,result] : result
+        end
+
+        def new_request(uri)
+          Net::HTTP.new(uri.host,uri.port)
         end
     end
 
