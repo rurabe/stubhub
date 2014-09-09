@@ -4,9 +4,9 @@ module Stubhub
       BASE_URL = "https://api.stubhub.com"
 
       class << self
-        def make_request(endpoint,query={},method=:get,opts={})
+        def make_request(endpoint,query={},opts={})
           raise StandardError.new("STUBHUB_APP_KEY must be set in the ENV") unless ENV['STUBHUB_APP_KEY']
-          response = fetch_response("#{BASE_URL}/#{endpoint}",query,method,opts)
+          response = fetch_response("#{BASE_URL}/#{endpoint}",query,opts)
           JSON.parse(response.body)
         end
 
@@ -16,25 +16,25 @@ module Stubhub
             {rows: 99999}
           end
 
-          def fetch_response(url,query,method,opts)
-            uri,request = new_request(url,query,method,opts)
+          def fetch_response(url,query,opts)
+            uri,request = new_request(url,query,opts)
             net = Net::HTTP.new(uri.hostname,uri.port)
             net.set_debug_output $stderr
             net.use_ssl = true
             net.start {|http| http.request(request) }
           end
 
-          def new_request(url,query,method,opts)
+          def new_request(url,query,opts)
             uri = URI(url)
-            request = case method
-            when :get
-              uri.query = URI.encode_www_form(default_params.merge(query))
-              set_headers!(Net::HTTP::Get.new(uri),opts)
-            when :post
+            request = case opts[:method]
+            when /post/i
               set_headers!(Net::HTTP::Post.new(uri),opts).tap do |r|
                 r.body = query.to_json
                 r.content_type = 'application/json'
               end
+            else # get request
+              uri.query = URI.encode_www_form(default_params.merge(query))
+              set_headers!(Net::HTTP::Get.new(uri),opts)
             end
             [uri,request]
           end

@@ -6,7 +6,7 @@ module Stubhub
           # Takes an array of arrays: ids and prices
           # [[2131412,100.00],[5256234,90.00]]
           def price_by_listing_id(*listings)
-            data = client.make_request('pricing/aip/v1/price',prepare_query(listings),:post,context: :user)
+            data = client.make_request('pricing/aip/v1/price',prepare_query(listings),{method: :post,context: :user})
             new(data)
           end
 
