@@ -5,7 +5,7 @@ module Stubhub
         class << self
           # Takes an array of arrays: ids and prices
           # [[2131412,100.00],[5256234,90.00]]
-          def price_by_listing_id(*listings)
+          def price_display_prices(*listings)
             data = client.make_request('pricing/aip/v1/price',prepare_query(listings),{method: :post,context: :user})
             new(data)
           end
@@ -21,17 +21,17 @@ module Stubhub
             end
 
             def prepare_price_requests(listings)
-              listings.each_with_index.map do |listing,key|
-                prepare_price_request(listing,key)
+              listings.map do |listing|
+                prepare_price_request(listing)
               end
             end
 
-            def prepare_price_request(listing,key)
+            def prepare_price_request(listing)
               id = listing.first
               price = listing.last
               {
-                requestKey: key,
-                listingId: listing.first,
+                requestKey: id,
+                listingId: id,
                 amountPerTicket: {
                   amount: price,
                   currency: "USD"
@@ -41,6 +41,24 @@ module Stubhub
               }
             end
         end
+
+        def listing_prices
+          Hash[price_responses.map{|r| [r["requestKey"],r["listingPrice"]["amount"]] }]
+        end
+
+        def listing_price_for(requestKey)
+          listing_prices[requestKey.to_s]
+        end
+
+        def response_for(requestKey)
+          price_responses.find{|r| r["requestKey"] == requestKey.to_s }
+        end
+
+        private
+
+          def price_responses
+            data["priceResponseList"]["priceResponse"]
+          end
 
 
       end

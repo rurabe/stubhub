@@ -1,6 +1,7 @@
 module Stubhub
   module V1
     class Response
+      attr_reader :data
       def self.client
         Stubhub::V1::Client
       end
