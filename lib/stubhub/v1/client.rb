@@ -19,7 +19,7 @@ module Stubhub
           def fetch_response(url,query,opts)
             uri,request = new_request(url,query,opts)
             net = Net::HTTP.new(uri.hostname,uri.port)
-            net.set_debug_output $stderr
+            # net.set_debug_output $stderr
             net.use_ssl = true
             net.start {|http| http.request(request) }
           end
