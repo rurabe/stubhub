@@ -30,7 +30,6 @@ module Stubhub
 
         def send_request(request)
           net = Net::HTTP.new(uri.hostname,uri.port)
-          net.set_debug_output $stderr
           net.use_ssl = true
           net.start {|http| http.request(request) }
         end
