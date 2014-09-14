@@ -14,5 +14,9 @@
         Client
       end
 
+      def self.proxy_client
+        ProxyClient
+      end
+
     end
   end

@@ -22,6 +22,6 @@ require_relative 'stubhub/v1/search/inventory'
 require_relative 'stubhub/v1/catalog/events'
 require_relative 'stubhub/v1/pricing/aip'
 
-
+require_relative 'stubhub/v2/search/events'
 module Stubhub
 end

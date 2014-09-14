@@ -3,7 +3,7 @@ module Stubhub
 
     def self.find(params, options = {})
       options.merge!({ :path => "listingCatalog/venue_zone_section/select" })
-      Client.make_request(self, params, options)
+      client.make_request(self, params, options)
     end
 
     def self.find_by_section_id(section_id,options = {})
