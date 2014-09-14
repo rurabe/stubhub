@@ -3,9 +3,12 @@ require 'uri'
 require 'net/http'
 require 'base64'
 
-require_relative 'stubhub/api_error'
 require_relative 'stubhub/version'
+
+require_relative 'stubhub/settings'
+require_relative 'stubhub/api_error'
 require_relative 'stubhub/login'
+require_relative 'stubhub/client'
 
 
 require_relative 'stubhub/lcs/document'
@@ -25,6 +28,6 @@ require_relative 'stubhub/v1/search/inventory'
 require_relative 'stubhub/v1/catalog/events'
 require_relative 'stubhub/v1/pricing/aip'
 
-require_relative 'stubhub/v2/search/events'
 module Stubhub
+
 end

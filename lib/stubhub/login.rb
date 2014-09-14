@@ -3,10 +3,10 @@ module Stubhub
     class << self
 
       def get_token(key=nil,secret=nil,username=nil,password=nil)
-        key      ||= ENV['STUBHUB_CONSUMER_KEY']
-        secret   ||= ENV['STUBHUB_CONSUMER_SECRET']
-        username ||= ENV['STUBHUB_USERNAME']
-        password ||= ENV['STUBHUB_PASSWORD']
+        key      ||= Stubhub.consumer_key
+        secret   ||= Stubhub.consumer_secret
+        username ||= Stubhub.developer_username
+        password ||= Stubhub.developer_password
         request = generate_request(key,secret,username,password)
         response = send_request(request)
         parse_response(response)
