@@ -11,9 +11,9 @@ module Stubhub
       VCR.eject_cassette
     end
 
-    context ".find_by_venue_id" do
+    context ".find_by_id" do
       it "finds find the venue with venue id #{VENUE_ID}" do
-        venue = Venue.find_by_venue_id(VENUE_ID)
+        venue = Venue.find_by_id(VENUE_ID)
         venue["venue_id"].should eq(VENUE_ID.to_s)
       end
     end
