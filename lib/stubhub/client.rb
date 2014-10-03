@@ -55,7 +55,7 @@ module Stubhub
 
           def auth_token(opts)
             if opts[:context] == :user
-              Stubhub.user_token  
+              Stubhub.consumer_token  
             else
               Stubhub.application_token
             end
