@@ -1,10 +1,9 @@
 module Stubhub
   class Client
-    BASE_URL = "https://api.stubhub.com"
 
     class << self
       def make_request(endpoint,query={},opts={})
-        JSON.parse(fetch_response("#{BASE_URL}/#{endpoint}",query,opts).body)
+        JSON.parse(fetch_response("#{base_url(opts)}/#{endpoint}",query,opts).body)
       end
 
       private
@@ -51,6 +50,10 @@ module Stubhub
 
           def default_params
             {rows: 99999}
+          end
+
+          def base_url(opts)
+            opts[:base_url] || "https://api.stubhub.com"
           end
 
           def auth_token(opts)
