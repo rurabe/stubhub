@@ -10,15 +10,28 @@ module Stubhub
 
           def fetch_response(url,query,opts)
             uri,request = new_request(url,query,opts)
-            net = Net::HTTP.new(uri.hostname,uri.port)
-            net.use_ssl = true
-            net.start {|http| http.request(request) }
+            http = new_http_session(uri,opts)
+            http.use_ssl = true unless opts[:ssl] == false
+            http.set_debug_output $stderr
+            http.start {|http| http.request(request) }
+          end
+
+          def new_http_session(uri,opts)
+            pa = opts[:proxy_address] || Stubhub.proxy_address
+            if pa && (opts[:proxy] != false)
+              pp = opts[:proxy_port] || Stubhub.proxy_port
+              pu = opts[:proxy_username] || Stubhub.proxy_username
+              pw = opts[:proxy_password] || Stubhub.proxy_password
+              Net::HTTP.new(uri.hostname,uri.port,pa,pp,pu,pw)
+            else
+              Net::HTTP.new(uri.hostname,uri.port)
+            end
           end
 
           def new_request(url,query,opts)
             uri = URI(url)
             opts[:headers] ||= {}
-            request = case opts[:method]
+            request = opts[:request] || case opts[:method]
             when /post/i
               opts[:headers][:content_type] = 'application/json'
               set_headers!(Net::HTTP::Post.new(uri),opts).tap do |r|
@@ -49,7 +62,7 @@ module Stubhub
           end
 
           def default_params
-            {rows: 99999}
+            {}
           end
 
           def base_url(opts)
