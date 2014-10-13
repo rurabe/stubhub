@@ -1,67 +1,82 @@
 module Stubhub
   class Client
-    BASE_URL = 'http://partner-feed.stubhub.com'
 
     class << self
-      def make_request(klass, params, options={})
-        result = make_unparsed_request(klass,params,options)
-        options[:debug] ? result : parse(result.body)
-      end
-
-      def make_unparsed_request(klass,params,options={})
-        path = options.delete(:path) || "listingCatalog/select"
-        query = prepare_query(params, options)
-        get("#{BASE_URL}/#{path}/?#{query}",options)
-      end
-
-      def prepare_query(params, options={})
-        query = {:q => solr_dump(params) }
-        hash_to_params( defaults.merge(options).merge(query) )
-      end
-
-      def solr_dump(params)
-        params.map do |k,v|
-          case v
-          when Array then "#{k}:(#{v.join(" OR ")})"
-          else "#{k}:\"#{v}\""
-          end
-        end.join(' AND ')
-      end
-
-      def hash_to_params(params={})
-        params.map do |k,v|
-          "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}"
-        end.join("&")
-      end
-
-      def parse(body)
-        JSON.parse(body)["response"]["docs"]
-      end
-
-      def defaults
-        {
-          :rows => 999999,
-          :wt   => "json"
-        }
+      def make_request(endpoint,query={},opts={})
+        JSON.parse(fetch_response("#{base_url(opts)}/#{endpoint}",query,opts).body)
       end
 
       private
 
-        def get(url,options={})
-          uri = URI(url)
-          request = new_request(uri)
-          result = new_request(uri).start do |http|
-            http.get(uri)
+          def fetch_response(url,query,opts)
+            uri,request = new_request(url,query,opts)
+            http = new_http_session(uri,opts)
+            http.use_ssl = true unless opts[:ssl] == false
+            http.set_debug_output $stderr
+            http.start {|http| http.request(request) }
           end
-          options[:debug] ? [request,result] : result
-        end
 
-        def new_request(uri)
-          Net::HTTP.new(uri.host,uri.port)
-        end
+          def new_http_session(uri,opts)
+            pa = opts[:proxy_address] || Stubhub.proxy_address
+            if pa && (opts[:proxy] != false)
+              pp = opts[:proxy_port] || Stubhub.proxy_port
+              pu = opts[:proxy_username] || Stubhub.proxy_username
+              pw = opts[:proxy_password] || Stubhub.proxy_password
+              Net::HTTP.new(uri.hostname,uri.port,pa,pp,pu,pw)
+            else
+              Net::HTTP.new(uri.hostname,uri.port)
+            end
+          end
+
+          def new_request(url,query,opts)
+            uri = URI(url)
+            opts[:headers] ||= {}
+            request = opts[:request] || case opts[:method]
+            when /post/i
+              opts[:headers][:content_type] = 'application/json'
+              set_headers!(Net::HTTP::Post.new(uri),opts).tap do |r|
+                r.body = query.to_json
+              end
+            else # get request
+              uri.query = URI.encode_www_form(default_params.merge(query))
+              set_headers!(Net::HTTP::Get.new(uri),opts)
+            end
+            [uri,request]
+          end
+
+          def set_headers!(request,opts)
+            headers = default_headers(opts).merge(opts[:headers])
+            headers.each do |k,v|
+              key = k.to_s.split(/[\s\-\_]/).map(&:capitalize).join('-')
+              request[key] = v
+            end
+            request
+          end
+
+          def default_headers(opts)
+            {
+              :authorization   => "Bearer #{auth_token(opts)}",
+              :accept          => 'application/json',
+              :accept_encoding => 'application/json'
+            }
+          end
+
+          def default_params
+            {}
+          end
+
+          def base_url(opts)
+            opts[:base_url] || "https://api.stubhub.com"
+          end
+
+          def auth_token(opts)
+            if opts[:context] == :user
+              Stubhub.consumer_token  
+            else
+              Stubhub.application_token
+            end
+          end
+
     end
-
   end
 end
-
-# http://partner-feed.stubhub.com/listingCatalog/select/?q=stubhubDocumentType:event
