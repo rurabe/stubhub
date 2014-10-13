@@ -23,27 +23,27 @@ http_interactions:
       Server:
       - Apache
       Last-Modified:
-      - Tue, 26 Aug 2014 08:21:53 GMT
-      Content-Length:
-      - '1054'
+      - Thu, 18 Sep 2014 11:07:15 GMT
       Expires:
-      - Sun, 14 Sep 2014 20:44:29 GMT
-      Content-Type:
-      - application/json;charset=UTF-8
+      - Tue, 14 Oct 2014 01:09:19 GMT
       Cache-Control:
       - max-age=7200, public
       Date:
-      - Sun, 14 Sep 2014 18:44:29 GMT
+      - Mon, 13 Oct 2014 23:09:19 GMT
       Connection:
       - keep-alive
       Set-Cookie:
-      - DC=origin1;expires=Sun, 14-Sep-2014 19:14:29 GMT;path=/;domain=stubhub.com;
-      - TLTHID=28C187283C3F103C0B17CCA3FC1105D1; Path=/; Domain=.stubhub.com
-      - TLTSID=28C187283C3F103C0B17CCA3FC1105D1; Path=/; Domain=.stubhub.com
+      - DC=origin1;expires=Mon, 13-Oct-2014 23:39:19 GMT;path=/;domain=stubhub.com;
+      - TLTHID=F5F296B0532D1053C8C4D07F87E2D762; Path=/; Domain=.stubhub.com
+      - TLTSID=F5F296B0532D1053C8C4D07F87E2D762; Path=/; Domain=.stubhub.com
+      Content-Type:
+      - application/json;charset=UTF-8
+      Content-Length:
+      - '1052'
     body:
       encoding: UTF-8
       string: |
-        {"responseHeader":{"status":0,"QTime":124,"params":{"q":"venue_section_id:\"62048\"","wt":"json","rows":"60000"}},"response":{"numFound":1,"start":0,"docs":[{"stubhubDocumentId":"venue_zone_section-59070","stubhubDocumentType":"venue_zone_section","id":"59070","active":"1","venue_config_id":"2305","venue_zone_id":"10818","venue_zone_desc":"Floor","venue_zone_active":"1","venue_section_id":"62048","venue_section_active":"1","venue_zone_section_id":"59070","venue_section_alias_id":["44705"],"venue_section_alias":["Floor 112"],"venue_section_alias_map_id":["178099"],"venue_section_alias_map_primary_display":["1"],"venue_section_primary_alias":"Floor 112","venue_section_primary_alias_id":"44705","venue_section_primary_alias_map_id":"178099","venue_section_primary_alias_date_added":"2006-09-12T23:35:19Z","venue_section_primary_alias_date_last_modified":"2013-02-04T20:53:33Z","venue_zone_display_sort_order":"1","updateInitiatedTimestamp":"2013-06-13T12:42:53.622Z","dateLastIndexed":"2013-06-13T12:55:19.329Z","_version_":1437732039329579008}]}}
+        {"responseHeader":{"status":0,"QTime":6,"params":{"q":"venue_section_id:\"62048\"","wt":"json","rows":"60000"}},"response":{"numFound":1,"start":0,"docs":[{"stubhubDocumentId":"venue_zone_section-59070","stubhubDocumentType":"venue_zone_section","id":"59070","active":"1","venue_config_id":"2305","venue_zone_id":"10818","venue_zone_desc":"Floor","venue_zone_active":"1","venue_section_id":"62048","venue_section_active":"1","venue_zone_section_id":"59070","venue_section_alias_id":["44705"],"venue_section_alias":["Floor 112"],"venue_section_alias_map_id":["178099"],"venue_section_alias_map_primary_display":["1"],"venue_section_primary_alias":"Floor 112","venue_section_primary_alias_id":"44705","venue_section_primary_alias_map_id":"178099","venue_section_primary_alias_date_added":"2006-09-12T23:35:19Z","venue_section_primary_alias_date_last_modified":"2013-02-04T20:53:33Z","venue_zone_display_sort_order":"1","updateInitiatedTimestamp":"2013-06-13T12:42:53.622Z","dateLastIndexed":"2013-06-13T12:55:19.329Z","_version_":1437732039329579008}]}}
     http_version: 
-  recorded_at: Sun, 14 Sep 2014 18:44:29 GMT
+  recorded_at: Mon, 13 Oct 2014 23:09:19 GMT
 recorded_with: VCR 2.4.0
