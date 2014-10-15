@@ -62,7 +62,7 @@ module Stubhub
           end
 
           def default_params
-            {}
+            {rows: 99999}
           end
 
           def base_url(opts)
