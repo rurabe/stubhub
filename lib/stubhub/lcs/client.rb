@@ -50,9 +50,7 @@ module Stubhub
 
             def get(url,options={})
               uri = URI(url)
-              new_request(uri,options).tap do |http|
-                http.set_debug_output $stdout
-              end.start do |http|
+              new_request(uri,options).start do |http|
                 http.get(uri)
               end
             end
