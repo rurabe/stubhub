@@ -14,7 +14,6 @@ require_relative 'stubhub/client'
 
 require_relative 'stubhub/lcs/document'
 require_relative 'stubhub/lcs/client'
-require_relative 'stubhub/lcs/proxy_client'
 require_relative 'stubhub/lcs/event'
 require_relative 'stubhub/lcs/genre'
 require_relative 'stubhub/lcs/geo'
@@ -30,3 +29,5 @@ require_relative 'stubhub/pricing/aip/v1'
 module Stubhub
 
 end
+
+Stubhub.configure

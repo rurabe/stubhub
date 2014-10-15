@@ -6,7 +6,7 @@ module Stubhub
         class << self
           def make_request(klass, params, options={})
             result = make_unparsed_request(klass,params,options)
-            options[:debug] ? result : parse(result.body)
+            parse(result.body)
           end
 
           def make_unparsed_request(klass,params,options={})
@@ -50,15 +50,19 @@ module Stubhub
 
             def get(url,options={})
               uri = URI(url)
-              request = new_request(uri)
-              result = new_request(uri).start do |http|
+              new_request(uri,options).tap do |http|
+                http.set_debug_output $stdout
+              end.start do |http|
                 http.get(uri)
               end
-              options[:debug] ? [request,result] : result
             end
 
-            def new_request(uri)
-              Net::HTTP.new(uri.host,uri.port)
+            def new_request(uri,options)
+              if Stubhub.proxy_address && (options[:proxy] != false)
+                Net::HTTP.new(uri.host,uri.port,*Stubhub.proxy_attributes)
+              else
+                Net::HTTP.new(uri.host,uri.port)
+              end
             end
         end
 

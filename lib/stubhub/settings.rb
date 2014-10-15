@@ -33,6 +33,10 @@ module Stubhub
       end
     end
 
+    def proxy_attributes
+      [:proxy_address,:proxy_port,:proxy_username,:proxy_password].map {|m| settings.send(m) }
+    end
+
     private
 
       def settings

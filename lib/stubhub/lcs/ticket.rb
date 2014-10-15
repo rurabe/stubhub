@@ -7,10 +7,6 @@ module Stubhub
         find(params,options).first
       end
 
-      def self.client
-        Stubhub.proxy_address ? ProxyClient : Client
-      end
-
     end
   end
 end
