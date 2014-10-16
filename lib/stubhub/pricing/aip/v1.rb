@@ -61,7 +61,7 @@ module Stubhub
 
         def listing_price_for(request_key)
           price_response = self['priceResponseList']['priceResponse'].find{|pr| pr['requestKey'] == request_key.to_s }
-          price_response['displayPrice']['amount'] if price_response
+          price_response['listingPrice']['amount'] if price_response
         end
       end
     end
