@@ -9,7 +9,8 @@ module Stubhub
     :proxy_address,
     :proxy_port,
     :proxy_username,
-    :proxy_password
+    :proxy_password,
+    :user_id
   ]
 
   class Settings

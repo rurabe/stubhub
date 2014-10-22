@@ -3,7 +3,11 @@ module Stubhub
 
     class << self
       def make_request(endpoint,query={},opts={})
-        JSON.parse(fetch_response("#{base_url(opts)}/#{endpoint}",query,opts).body)
+        JSON.parse(make_basic_request(endpoint,query,opts).body)
+      end
+
+      def make_basic_request(endpoint,query={},opts={})
+        fetch_response("#{base_url(opts)}/#{endpoint}",query,opts)
       end
 
       private
@@ -12,7 +16,7 @@ module Stubhub
             uri,request = new_request(url,query,opts)
             http = new_http_session(uri,opts)
             http.use_ssl = true unless opts[:ssl] == false
-            # http.set_debug_output $stderr # for debug sessions
+            http.set_debug_output $stderr # for debug sessions
             http.start {|http| http.request(request) }
           end
 

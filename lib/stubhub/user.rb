@@ -7,11 +7,17 @@ module Stubhub
         opts[:secret]   ||= Stubhub.consumer_secret
         opts[:username] ||= Stubhub.developer_username
         opts[:password] ||= Stubhub.developer_password
-        Client.make_request('login',{}, opts.merge(request: generate_request(opts)) )
+        response = Client.make_basic_request('login',{}, opts.merge(request: generate_request(opts)) )
+        JSON.parse(response.body).merge("user_id" => response['X-StubHub-User-GUID']) if response.body
       end
 
       def login!(opts={})
-        get_token(opts)["access_token"].tap {|token|  Stubhub.configure(consumer_token: token) }
+        login_hash = get_token(opts)
+        Stubhub.configure(
+          consumer_token: login_hash["access_token"],
+          user_id: login_hash["user_id"]
+        )
+        true
       end
 
       private
