@@ -16,7 +16,7 @@ module Stubhub
             uri,request = new_request(url,query,opts)
             http = new_http_session(uri,opts)
             http.use_ssl = true unless opts[:ssl] == false
-            http.set_debug_output $stderr # for debug sessions
+            # http.set_debug_output $stderr # for debug sessions
             http.start {|http| http.request(request) }
           end
 
