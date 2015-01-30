@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    stubhub (1.0.0)
+    stubhub (1.1.0)
 
 GEM
   remote: https://rubygems.org/
