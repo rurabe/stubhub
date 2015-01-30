@@ -4,13 +4,13 @@ module Stubhub
       class V1 < Response
         class << self
 
-          # This method requires you to structure the individual listing requests the way they want it yourself
           def price_listings(listings,opts={})
             response = Client.make_request(
               'pricing/aip/v1/price',
               prepare_pricing_query(listings),
               opts.merge(method: :post, context: :user)
             )
+            self[response]
           end
 
           private
@@ -21,7 +21,6 @@ module Stubhub
                   }
                 }
               end
-
           end # /self
 
         def listing_price_for(request_key)
