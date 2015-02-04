@@ -38,6 +38,14 @@ module Stubhub
       [:proxy_address,:proxy_port,:proxy_username,:proxy_password].map {|m| settings.send(m) }
     end
 
+    def enable_debug_output=(setting)
+      @enable_debug_output = setting
+    end
+
+    def enable_debug_output?
+      @enable_debug_output
+    end
+
     private
 
       def settings
