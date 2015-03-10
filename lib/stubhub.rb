@@ -26,6 +26,7 @@ require_relative 'stubhub/catalog/venues/v2'
 require_relative 'stubhub/search/inventory/v1'
 require_relative 'stubhub/pricing/aip/v1'
 require_relative 'stubhub/account_management/sales/v1'
+require_relative 'stubhub/account_management/listings/v1'
 
 module Stubhub
 
