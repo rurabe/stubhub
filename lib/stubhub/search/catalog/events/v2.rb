@@ -6,7 +6,7 @@ module Stubhub
           
           class << self
             def find_by_venue_id(venue_id,opts={})
-              self[Client.make_request('search/catalog/events/v2',{venue_id: venue_id, sort: "dateLocal asc"},opts)]
+              self[Client.make_request('search/catalog/events/v2',{venue_id: venue_id},opts)]
             end
           end # /self
 
