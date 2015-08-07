@@ -5,8 +5,8 @@ module Stubhub
         class V2 < Response
           
           class << self
-            def find_by_venue_id(venue_id,opts={})
-              self[Client.make_request('search/catalog/events/v2',{venue_id: venue_id},opts)]
+            def find_by_venue_id(venue_id,query={},opts={})
+              self[Client.make_request('search/catalog/events/v2',query.merge(venue_id: venue_id),opts)]
             end
           end # /self
 
