@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    stubhub (1.1.0)
+    stubhub (1.2.1)
 
 GEM
   remote: https://rubygems.org/
@@ -38,3 +38,6 @@ DEPENDENCIES
   stubhub!
   vcr
   webmock
+
+BUNDLED WITH
+   1.11.2
